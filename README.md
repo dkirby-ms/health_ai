@@ -19,14 +19,14 @@ description: A complete ToDo app with Python FastAPI and Azure Cosmos API for Mo
 ---
 <!-- YAML front-matter schema: https://review.learn.microsoft.com/en-us/help/contribute/samples/process/onboarding?branch=main#supported-metadata-fields-for-readmemd -->
 
-# Containerized React Web App with Python API and MongoDB on Azure
+# AHDS GenAI
 
 [![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://codespaces.new/azure-samples/todo-python-mongo-aca)
 [![Open in Dev Container](https://img.shields.io/static/v1?style=for-the-badge&label=Dev+Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/todo-python-mongo-aca)
 
-A blueprint for getting a React web app with Python (FastAPI) API and a MongoDB database running on Azure. The frontend (a ToDo web app) which can be removed and replaced with your own application code. Add your own source code and leverage the Infrastructure as Code assets (written in Bicep) to get up and running quickly.
+A blueprint for deploying AHDS with APIM frontend and using it with LMs.
 
-Let's jump in and get this up and running in Azure. When you are finished, you will have a fully functional web app deployed to the cloud. In later steps, you'll see how to setup a pipeline and monitor the application.
+Currently includes a stub TODO application that will be replaced with a custom frontend.
 
 !["Screenshot of deployed ToDo app"](assets/web.png)
 
@@ -90,7 +90,7 @@ This application utilizes the following Azure resources:
 
 Here's a high level architecture diagram that illustrates these components. Notice that these are all contained within a single [resource group](https://docs.microsoft.com/azure/azure-resource-manager/management/manage-resource-groups-portal), that will be created for you when you create the resources.
 
-!["Application architecture diagram"](assets/resources.png)
+*WIP*
 
 ### Cost of provisioning and deploying this template
 This template provisions resources to an Azure subscription that you will select upon provisioning them. Refer to the [Pricing calculator for Microsoft Azure](https://azure.microsoft.com/pricing/calculator/) to estimate the cost you might incur when this template is running on Azure and, if needed, update the included Azure resource definitions found in `infra/main.bicep` to suit your needs.
