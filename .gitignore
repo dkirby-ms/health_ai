@@ -1,1 +1,4 @@
 .azure
+.vscode/
+.azdo/
+.devcontainer/
