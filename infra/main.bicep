@@ -16,7 +16,7 @@ param location string = deployment().location
 param fhirName string = 'dkfhirlab123'
 param storageAccountName string = 'eslzsa${uniqueString('ahds', utcNow('u'))}'
 param storageAccountType string = 'Standard_LRS'
-param apiUrlPath string = 'https://raw.githubusercontent.com/Azure/ahds-reference-architecture/main/Scenarios/Baseline/bicep/03-AHDS/swagger/ahds-fhir-swagger.json'
+param apiUrlPath string = 'https://raw.githubusercontent.com/dkirby-ms/health_ai/main/infra/app/apim/AHDS-Swagger.json'
 
 param apiContainerAppName string = ''
 param applicationInsightsDashboardName string = ''
@@ -200,46 +200,6 @@ module apim './core/gateway/apim.bicep' = if (useAPIM) {
   }
 }
 
-module apimImportAPI './app/apim/api-deploymentScript.bicep' = {
-  name: 'apimImportAPI'
-  scope: resourceGroup(rg.name)
-  params: {
-    managedIdentity: appgwIdentity.outputs.azidentity
-    location: location
-    RGName: rg.name
-    APIMName: apim.outputs.apimServiceName
-    serviceUrl: fhir.outputs.serviceHost
-    APIFormat: 'Swagger'
-    APIpath: 'fhir'
-    ApiUrlPath: ApiUrlPath
-  }
-  dependsOn: [
-    apimrole
-  ]
-}
-
-module appgw './app/network/appgw.bicep' = {
-  scope: resourceGroup(rg.name)
-  name: 'appgw'
-  params: {
-    appGwyAutoScale: appGwyAutoScale
-    availabilityZones: availabilityZones
-    location: location
-    appgwname: appGatewayName
-    appgwpip: publicipappgw.outputs.publicipId
-    subnetid: appgwSubnet.id
-    appGatewayIdentityId: appgwIdentity.outputs.identityid
-    appGatewayFQDN: appGatewayFQDN
-    keyVaultSecretId: certificate.outputs.secretUri
-    primaryBackendEndFQDN: primaryBackendEndFQDN
-    diagnosticWorkspaceId: logAnalyticsWorkspace.id
-    storageFQDN: storageFQDN
-  }
-  dependsOn: [
-   apimImportAPI
-  ]
-}
-
 // Data outputs
 output AZURE_COSMOS_CONNECTION_STRING_KEY string = cosmos.outputs.connectionStringKey
 output AZURE_COSMOS_DATABASE_NAME string = cosmos.outputs.databaseName
@@ -255,9 +215,7 @@ output AZURE_KEY_VAULT_ENDPOINT string = keyVault.outputs.endpoint
 output AZURE_KEY_VAULT_NAME string = keyVault.outputs.name
 output AZURE_LOCATION string = location
 output AZURE_TENANT_ID string = tenant().tenantId
-output API_BASE_URL string = useAPIM ? apimApi.outputs.SERVICE_API_URI : api.outputs.SERVICE_API_URI
 output REACT_APP_WEB_BASE_URL string = web.outputs.SERVICE_WEB_URI
 output SERVICE_API_NAME string = api.outputs.SERVICE_API_NAME
 output SERVICE_WEB_NAME string = web.outputs.SERVICE_WEB_NAME
 output USE_APIM bool = useAPIM
-output SERVICE_API_ENDPOINTS array = useAPIM ? [ apimApi.outputs.SERVICE_API_URI, api.outputs.SERVICE_API_URI ] : []
