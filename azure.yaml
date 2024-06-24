@@ -35,7 +35,7 @@ hooks:
   postdeploy:
     windows:
       shell: pwsh
-      run: 'rm ./src/web/.env.local'
+      run: ./postdeploy.ps1
     posix:
       shell: sh
       run: 'rm ./src/web/.env.local'

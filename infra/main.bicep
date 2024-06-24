@@ -140,19 +140,6 @@ module api './app/apim/api.bicep' = {
   }
 }
 
-// The application database
-module cosmos './app/db.bicep' = {
-  name: 'cosmos'
-  scope: rg
-  params: {
-    accountName: !empty(cosmosAccountName) ? cosmosAccountName : '${abbrs.documentDBDatabaseAccounts}${resourceToken}'
-    databaseName: cosmosDatabaseName
-    location: location
-    tags: tags
-    keyVaultName: keyVault.outputs.name
-  }
-}
-
 // Store secrets in a keyvault
 module keyVault './core/security/keyvault.bicep' = {
   name: 'keyvault'
