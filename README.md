@@ -132,3 +132,37 @@ This template uses [Azure Key Vault](https://docs.microsoft.com/azure/key-vault/
 ## Reporting Issues and Feedback
 
 If you have any feature requests, issues, or areas for improvement, please [file an issue](https://aka.ms/azure-dev/issues). To keep up-to-date, ask questions, or share suggestions, join our [GitHub Discussions](https://aka.ms/azure-dev/discussions). You may also contact us via AzDevTeam@microsoft.com.
+
+# Use case flow
+
+**Start with the system of record data sources. These can be:** 
+* EHRs (Epic, Oracle Health, etc.)
+* Ancillary clinical systems, such as radiology (imaging) information system (RIS), laboratory management IS (LMIS), picture archiving and communication system (PACS), vendor neutral archive (VNA) of imaging data.
+* Integration (interface) engines
+
+**Extract data in one of the common healthcare data formats (HL7v2, CDA/CCD, FHIR), DICOM (?), or unstructured/semi-structured data (CSV, TSV, PDF, TXT, etc.)**
+
+**Ingest data into Azure Health Data Services**
+* Via healthcare APIs (FHIR, DICOM?)
+* Via bulk import into healthcare APIs
+* Copy into ADLSv2 and ingest into healthcare API
+
+**Ingest data into Microsoft Fabric**
+* Export from FHIR, DICOM and ingest into Lakehouse (Healthcare Solution for Fabric)
+* Ingest data from storage into Fabric Lakehouse
+
+**Transform and harmonize data using Medallion architecture using Healthcare Solution**
+
+**Demonstrate analytics capabilities:**
+* Notebook
+* SQL/Spark
+* Power BI visualizations
+
+**Demonstrate ML (AutoML) on discrete (structured) data**
+
+**Demonstrate GenAI (Copilot) on text data.**
+* Include structured data?
+
+**Demonstrate natural language question understanding and translation into**
+* SQL queries
+* FHIR interactions
