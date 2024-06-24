@@ -40,7 +40,7 @@ resource restApi 'Microsoft.ApiManagement/service/apis@2021-12-01-preview' = {
     type: 'http'
     format: 'openapi'
     serviceUrl: apiBackendUrl
-    value: loadTextContent('../../src/api/openapi.yaml')
+    value: loadTextContent('../../../src/api/openapi.yaml')
   }
 }
 

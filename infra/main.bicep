@@ -7,14 +7,16 @@ param environmentName string
 
 @minLength(1)
 @description('Primary location for all resources')
-param location string
+param location string = deployment().location
 
 // Optional parameters to override the default azd resource naming conventions. Update the main.parameters.json file to provide values. e.g.,:
 // "resourceGroupName": {
 //      "value": "myGroupName"
 // }
-param fhirName string
-
+param fhirName string = 'dkfhirlab123'
+param storageAccountName string = 'eslzsa${uniqueString('ahds', utcNow('u'))}'
+param storageAccountType string = 'Standard_LRS'
+param apiUrlPath string = 'https://raw.githubusercontent.com/Azure/ahds-reference-architecture/main/Scenarios/Baseline/bicep/03-AHDS/swagger/ahds-fhir-swagger.json'
 
 param apiContainerAppName string = ''
 param applicationInsightsDashboardName string = ''
@@ -57,6 +59,16 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: !empty(resourceGroupName) ? resourceGroupName : '${abbrs.resourcesResourceGroups}${environmentName}'
   location: location
   tags: tags
+}
+
+// Creating Storage Account for FIHRs, Functions, App Services in general
+module storage './core/storage/storage-account.bicep' = {
+  scope: resourceGroup(rg.name)
+  name: storageAccountName
+  params: {
+    location: location
+    name: storageAccountName
+  }
 }
 
 // adhs services
@@ -110,7 +122,7 @@ module web './app/web.bicep' = {
 }
 
 // Api backend
-module api './app/api.bicep' = {
+module api './app/apim/api.bicep' = {
   name: 'api'
   scope: rg
   params: {
@@ -153,6 +165,15 @@ module keyVault './core/security/keyvault.bicep' = {
   }
 }
 
+module fnvaultRole './core/security/keyvault-access.bicep' = {
+  scope: resourceGroup(rg.name)
+  name: 'keyvaultRole'
+  params: {
+    principalId: principalId
+    keyVaultName: keyVault.outputs.name
+  }
+}
+
 // Monitor application with Azure Monitor
 module monitoring './core/monitor/monitoring.bicep' = {
   name: 'monitoring'
@@ -179,19 +200,44 @@ module apim './core/gateway/apim.bicep' = if (useAPIM) {
   }
 }
 
-// Configures the API in the Azure API Management (APIM) service
-module apimApi './app/apim-api.bicep' = if (useAPIM) {
-  name: 'apim-api-deployment'
-  scope: rg
+module apimImportAPI './app/apim/api-deploymentScript.bicep' = {
+  name: 'apimImportAPI'
+  scope: resourceGroup(rg.name)
   params: {
-    name: useAPIM ? apim.outputs.apimServiceName : ''
-    apiName: 'todo-api'
-    apiDisplayName: 'Simple Todo API'
-    apiDescription: 'This is a simple Todo API'
-    apiPath: 'todo'
-    webFrontendUrl: web.outputs.SERVICE_WEB_URI
-    apiBackendUrl: api.outputs.SERVICE_API_URI
+    managedIdentity: appgwIdentity.outputs.azidentity
+    location: location
+    RGName: rg.name
+    APIMName: apim.outputs.apimServiceName
+    serviceUrl: fhir.outputs.serviceHost
+    APIFormat: 'Swagger'
+    APIpath: 'fhir'
+    ApiUrlPath: ApiUrlPath
   }
+  dependsOn: [
+    apimrole
+  ]
+}
+
+module appgw './app/network/appgw.bicep' = {
+  scope: resourceGroup(rg.name)
+  name: 'appgw'
+  params: {
+    appGwyAutoScale: appGwyAutoScale
+    availabilityZones: availabilityZones
+    location: location
+    appgwname: appGatewayName
+    appgwpip: publicipappgw.outputs.publicipId
+    subnetid: appgwSubnet.id
+    appGatewayIdentityId: appgwIdentity.outputs.identityid
+    appGatewayFQDN: appGatewayFQDN
+    keyVaultSecretId: certificate.outputs.secretUri
+    primaryBackendEndFQDN: primaryBackendEndFQDN
+    diagnosticWorkspaceId: logAnalyticsWorkspace.id
+    storageFQDN: storageFQDN
+  }
+  dependsOn: [
+   apimImportAPI
+  ]
 }
 
 // Data outputs

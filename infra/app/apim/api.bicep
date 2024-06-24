@@ -18,7 +18,7 @@ resource apiIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-3
 }
 
 // Give the API access to KeyVault
-module apiKeyVaultAccess '../core/security/keyvault-access.bicep' = {
+module apiKeyVaultAccess '../../core/security/keyvault-access.bicep' = {
   name: 'api-keyvault-access'
   params: {
     keyVaultName: keyVaultName
@@ -26,7 +26,7 @@ module apiKeyVaultAccess '../core/security/keyvault-access.bicep' = {
   }
 }
 
-module app '../core/host/container-app-upsert.bicep' = {
+module app '../../core/host/container-app-upsert.bicep' = {
   name: '${serviceName}-container-app'
   dependsOn: [ apiKeyVaultAccess ]
   params: {
