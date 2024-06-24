@@ -187,10 +187,6 @@ module apim './core/gateway/apim.bicep' = if (useAPIM) {
   }
 }
 
-// Data outputs
-output AZURE_COSMOS_CONNECTION_STRING_KEY string = cosmos.outputs.connectionStringKey
-output AZURE_COSMOS_DATABASE_NAME string = cosmos.outputs.databaseName
-
 // App outputs
 output API_CORS_ACA_URL string = corsAcaUrl
 output APPLICATIONINSIGHTS_CONNECTION_STRING string = monitoring.outputs.applicationInsightsConnectionString
