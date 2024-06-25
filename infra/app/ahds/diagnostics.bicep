@@ -18,11 +18,6 @@ resource diagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' 
   scope: FHIR
   properties: {
     logAnalyticsDestinationType: 'null'
-    logs: [
-      {
-        enabled: true
-      }
-    ]
     metrics: [
       {
         enabled: false
