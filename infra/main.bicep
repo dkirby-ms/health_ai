@@ -23,8 +23,6 @@ param applicationInsightsDashboardName string = ''
 param applicationInsightsName string = ''
 param containerAppsEnvironmentName string = ''
 param containerRegistryName string = ''
-param cosmosAccountName string = ''
-param cosmosDatabaseName string = ''
 param keyVaultName string = ''
 param logAnalyticsName string = 'healthailogs'
 param resourceGroupName string = ''
@@ -34,7 +32,7 @@ param apiAppExists bool = false
 param webAppExists bool = false
 
 @description('Flag to use Azure API Management to mediate the calls between the Web frontend and the backend API')
-param useAPIM bool = false
+param useAPIM bool = true
 
 @description('API Management SKU to use if APIM is enabled')
 param apimSku string = 'Consumption'
