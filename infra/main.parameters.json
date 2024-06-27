@@ -20,11 +20,8 @@
     "webApiBaseUrl": {
       "value": "${API_BASE_URL}"
     },
-    "useAPIM": {
-      "value": "${USE_APIM=false}"
-    },
     "apimSku": {
-      "value": "${APIM_SKU=Consumption}"
+      "value": "${APIM_SKU=Developer}"
     },
     "containerRegistryHostSuffix": {
       "value": "${CONTAINER_REGISTRY_HOST_SUFFIX=azurecr.io}"

@@ -7,7 +7,7 @@ workflows:
   up: 
     steps:
       - azd: provision
-      - azd: deploy --all
+      # - azd: deploy --all
 services:
   web:
     project: ./src/web
@@ -35,7 +35,7 @@ hooks:
   postdeploy:
     windows:
       shell: pwsh
-      run: ./postdeploy.ps1
+      run: './postdeploy.ps1 -RG rg-$env:AZURE_ENV_NAME -APIMNAME $env:APIM_SERVICE_NAME -serviceUrl $env:APIM_SERVICE_NAME -APIPath /HealthAI -APIFormat Swagger -ApiUrlPath $env:API_SPEC_URI -subscriptionId $env:AZURE_SUBSCRIPTION_ID'
     posix:
       shell: sh
       run: 'rm ./src/web/.env.local'

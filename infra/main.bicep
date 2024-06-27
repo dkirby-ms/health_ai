@@ -31,11 +31,8 @@ param apimServiceName string = ''
 param apiAppExists bool = false
 param webAppExists bool = false
 
-@description('Flag to use Azure API Management to mediate the calls between the Web frontend and the backend API')
-param useAPIM bool = true
-
 @description('API Management SKU to use if APIM is enabled')
-param apimSku string = 'Consumption'
+param apimSku string = 'Developer'
 
 @description('Hostname suffix for container registry. Set when deploying to sovereign clouds')
 param containerRegistryHostSuffix string = 'azurecr.io'
@@ -173,7 +170,7 @@ module monitoring './core/monitor/monitoring.bicep' = {
 }
 
 // Creates Azure API Management (APIM) service to mediate the requests between the frontend and the backend API
-module apim './core/gateway/apim.bicep' = if (useAPIM) {
+module apim './core/gateway/apim.bicep' = {
   name: 'apim-deployment'
   scope: rg
   params: {
@@ -199,4 +196,6 @@ output AZURE_TENANT_ID string = tenant().tenantId
 output REACT_APP_WEB_BASE_URL string = web.outputs.SERVICE_WEB_URI
 output SERVICE_API_NAME string = api.outputs.SERVICE_API_NAME
 output SERVICE_WEB_NAME string = web.outputs.SERVICE_WEB_NAME
-output USE_APIM bool = useAPIM
+output FHIR_SERVICE_URL string = fhir.outputs.fhirServiceURL
+output APIM_SERVICE_NAME string = apim.outputs.apimServiceName
+output API_SPEC_URI string = apiUrlPath
