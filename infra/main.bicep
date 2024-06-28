@@ -72,7 +72,7 @@ module fhir './app/ahds/fhirservice.bicep' = {
   name: fhirName
   params: {
     fhirName: fhirName
-    workspaceName: monitoring.outputs.logAnalyticsWorkspaceName
+    workspaceName: 'healthai'
     location: location
     diagnosticWorkspaceId: monitoring.outputs.logAnalyticsWorkspaceId
   }
