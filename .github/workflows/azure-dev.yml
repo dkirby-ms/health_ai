@@ -56,7 +56,7 @@ jobs:
           AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Provision Infrastructure
-        run: azd provision --no-prompt
+        run: azd provision --no-prompt --debug
 
       - name: Deploy Application
-        run: azd deploy --no-prompt
+        run: azd deploy --no-prompt --debug
