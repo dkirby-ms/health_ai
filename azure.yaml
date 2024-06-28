@@ -35,8 +35,8 @@ hooks:
   postdeploy:
     windows:
       shell: pwsh
-      run: './postdeploy.ps1 -RG rg-$env:AZURE_ENV_NAME -APIMNAME $env:APIM_SERVICE_NAME -serviceUrl $env:APIM_SERVICE_NAME -APIPath /HealthAI -APIFormat Swagger -ApiUrlPath $env:API_SPEC_URI -subscriptionId $env:AZURE_SUBSCRIPTION_ID'
+      run: './scripts/postdeploy.ps1 -RG rg-$env:AZURE_ENV_NAME -APIMNAME $env:APIM_SERVICE_NAME -serviceUrl $env:APIM_SERVICE_NAME -APIPath /HealthAI -APIFormat Swagger -ApiUrlPath $env:API_SPEC_URI -subscriptionId $env:AZURE_SUBSCRIPTION_ID'
     posix:
       shell: sh
-      run: './postdeploy.sh $API_BASE_URL $APIM_SERVICE_NAME $APIM_SERVICE_NAME /HealthAI Swagger $API_SPEC_URI $AZURE_SUBSCRIPTION_ID'
+      run: './scripts/postdeploy.sh $API_BASE_URL $APIM_SERVICE_NAME $APIM_SERVICE_NAME /HealthAI Swagger $API_SPEC_URI $AZURE_SUBSCRIPTION_ID'
 
