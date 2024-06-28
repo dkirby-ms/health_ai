@@ -39,10 +39,6 @@ hooks:
     posix:
       shell: sh
       run: |
-        azd auth login \
-            --client-id $AZURE_CLIENT_ID \
-            --federated-credential-provider github \
-            --tenant-id $AZURE_TENANT_ID
         chmod 755 ./scripts/postdeploy.sh
         ./scripts/postdeploy.sh $AZURE_ENV_NAME $APIM_SERVICE_NAME /HealthAI Swagger $API_SPEC_URI $AZURE_SUBSCRIPTION_ID $AZURE_CLIENT_ID $AZURE_CLIENT_SECRET
 
