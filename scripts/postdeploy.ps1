@@ -26,3 +26,5 @@ param(
 
       # Import API
       Import-AzApiManagementApi -Context $context -SpecificationFormat $APIFormat -SpecificationPath $destinationReplace -Path $APIPath
+
+      Remove-Item -Path ".\src\web\.env.local" -Force
