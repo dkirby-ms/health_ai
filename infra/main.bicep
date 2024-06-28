@@ -197,5 +197,6 @@ output REACT_APP_WEB_BASE_URL string = web.outputs.SERVICE_WEB_URI
 output SERVICE_API_NAME string = api.outputs.SERVICE_API_NAME
 output SERVICE_WEB_NAME string = web.outputs.SERVICE_WEB_NAME
 output FHIR_SERVICE_URL string = fhir.outputs.fhirServiceURL
+output FHIR_SERVICE_NAME string = fhir.outputs.serviceHost
 output APIM_SERVICE_NAME string = apim.outputs.apimServiceName
 output API_SPEC_URI string = apiUrlPath

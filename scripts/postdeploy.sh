@@ -5,6 +5,7 @@ APIPath=$3
 APIFormat=$4
 ApiUrlPath=$5
 subscriptionId=$6
+fhirHost=$7
 
 # Get the swagger file
 destination="AHDS-Swagger.json"
@@ -16,7 +17,7 @@ wget -O $destination $ApiUrlPath
 localContent=$(cat $destination)
 
 # Replace 'XXXXXXXXXXXXXXXXXXXXXXX' with $serviceUrl using sed
-modifiedContent=$(echo "$localContent" | sed s#XXXXXXXXXXXXXXXXXXXXXXX#$APIMName#g)
+modifiedContent=$(echo "$localContent" | sed s#XXXXXXXXXXXXXXXXXXXXXXX#$fhirHost#g)
 
 # Save the modified content
 echo "$modifiedContent" > $destinationReplace
