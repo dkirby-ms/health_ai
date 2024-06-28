@@ -1,7 +1,6 @@
 param(
       [string] [Parameter(Mandatory=$true)] $RG,
       [string] [Parameter(Mandatory=$true)] $APIMName,
-      [string] [Parameter(Mandatory=$true)] $serviceUrl,
       [string] [Parameter(Mandatory=$true)] $APIPath,
       [string] [Parameter(Mandatory=$true)] $APIFormat,
       [string] [Parameter(Mandatory=$true)] $ApiUrlPath,
@@ -18,7 +17,7 @@ param(
           Write-Error "Unable to download $ApiUrlPath. Error: $($Error[0])"
           throw
       }
-      ((Get-Content -path $destination -Raw) -replace 'XXXXXXXXXXXXXXXXXXXXXXX',$serviceUrl) | Set-Content -Path $destinationReplace
+      ((Get-Content -path $destination -Raw) -replace 'XXXXXXXXXXXXXXXXXXXXXXX',$APIMName) | Set-Content -Path $destinationReplace
       #az apim api import -g $RG --service-name $APIMName --path $APIPath --specification-format $APIFormat --specification-path $destinationReplace
 
       # Get context of the API Management instance.
