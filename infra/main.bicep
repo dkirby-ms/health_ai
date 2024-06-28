@@ -16,7 +16,7 @@ param location string = deployment().location
 param fhirName string = 'dkfhirlab123'
 param storageAccountName string = 'eslzsa${uniqueString('ahds', utcNow('u'))}'
 param storageAccountType string = 'Standard_LRS'
-param apiUrlPath string = 'https://raw.githubusercontent.com/dkirby-ms/health_ai/main/infra/app/apim/AHDS-Swagger.json'
+param apiUrlPath string = 'https://raw.githubusercontent.com/dkirby-ms/health_ai/main/infra/app/ahds/AHDS-Swagger.json'
 
 param apiContainerAppName string = ''
 param applicationInsightsDashboardName string = ''
