@@ -22,7 +22,7 @@ modifiedContent=$(echo "$localContent" | sed s#XXXXXXXXXXXXXXXXXXXXXXX#$APIMName
 echo "$modifiedContent" > $destinationReplace
 
 # Import the API into APIM
-az apim api import -g $RG --service-name $APIMName --path $APIPath --specification-format $APIFormat --specification-path $destinationReplace
+az apim api import -g rg-$RG --service-name $APIMName --path $APIPath --specification-format $APIFormat --specification-path $destinationReplace
 
 # Remove temp .env file
 rm ./src/web/.env.local
