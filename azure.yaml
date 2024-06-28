@@ -6,8 +6,8 @@ metadata:
 workflows:
   up: 
     steps:
-      - azd: provision
-      - azd: deploy --all
+      - azd: provision --debug
+      - azd: deploy --all --debug
 services:
   web:
     project: ./src/web
