@@ -1,24 +1,3 @@
----
-page_type: sample
-languages:
-- azdeveloper
-- python
-- bicep
-- typescript
-- html
-products:
-- azure
-- azure-cosmos-db
-- azure-container-apps
-- azure-container-registry
-- azure-monitor
-- azure-pipelines
-urlFragment: todo-python-mongo-aca
-name: Containerized React Web App with Python API and MongoDB on Azure
-description: A complete ToDo app with Python FastAPI and Azure Cosmos API for MongoDB for storage. Uses Azure Developer CLI (azd) to build, deploy, and monitor
----
-<!-- YAML front-matter schema: https://review.learn.microsoft.com/en-us/help/contribute/samples/process/onboarding?branch=main#supported-metadata-fields-for-readmemd -->
-
 # AHDS GenAI
 
 [![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://codespaces.new/azure-samples/todo-python-mongo-aca)
