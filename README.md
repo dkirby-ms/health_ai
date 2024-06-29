@@ -26,26 +26,16 @@ description: A complete ToDo app with Python FastAPI and Azure Cosmos API for Mo
 
 A blueprint for deploying AHDS with APIM frontend and using it with LMs.
 
-Currently includes a stub TODO application that will be replaced with a custom frontend.
+## Prerequisites
 
-!["Screenshot of deployed ToDo app"](assets/web.png)
-
-<sup>Screenshot of the deployed ToDo app</sup>
-
-### Prerequisites
-> This template will create infrastructure and deploy code to Azure. If you don't have an Azure Subscription, you can sign up for a [free account here](https://azure.microsoft.com/free/). Make sure you have contributor role to the Azure subscription.
-
-The following prerequisites are required to use this application. Please ensure that you have them all installed locally.
+The following prerequisites are required to use this application. Please ensure that you have them all installed locally if you wish to use the sample code.
 
 - [Azure Developer CLI](https://aka.ms/azd-install)
 - [Python (3.8+)](https://www.python.org/downloads/) - for the API backend
 - [Node.js with npm (18.17.1+)](https://nodejs.org/) - for the Web frontend
 - [Docker](https://docs.docker.com/get-docker/)
 
-### Quickstart
-To learn how to get started with any template, follow the steps in [this quickstart](https://learn.microsoft.com/azure/developer/azure-developer-cli/get-started?tabs=localinstall&pivots=programming-language-python) with this template(`Azure-Samples/todo-python-mongo-aca`).
-
-This quickstart will show you how to authenticate on Azure, initialize using a template, provision infrastructure and deploy code on Azure via the following commands:
+## Quickstart
 
 ```bash
 # Log in to azd. Only required once per-install.
@@ -84,26 +74,11 @@ azd up
 This application utilizes the following Azure resources:
 
 - [**Azure Container Apps**](https://docs.microsoft.com/azure/container-apps/) to host the Web frontend and API backend
-- [**Azure Cosmos DB API for MongoDB**](https://docs.microsoft.com/azure/cosmos-db/mongodb/mongodb-introduction) for storage
 - [**Azure Monitor**](https://docs.microsoft.com/azure/azure-monitor/) for monitoring and logging
 - [**Azure Key Vault**](https://docs.microsoft.com/azure/key-vault/) for securing secrets
-
-Here's a high level architecture diagram that illustrates these components. Notice that these are all contained within a single [resource group](https://docs.microsoft.com/azure/azure-resource-manager/management/manage-resource-groups-portal), that will be created for you when you create the resources.
-
-*WIP*
-
-### Cost of provisioning and deploying this template
-This template provisions resources to an Azure subscription that you will select upon provisioning them. Refer to the [Pricing calculator for Microsoft Azure](https://azure.microsoft.com/pricing/calculator/) to estimate the cost you might incur when this template is running on Azure and, if needed, update the included Azure resource definitions found in `infra/main.bicep` to suit your needs.
-
-### Application Code
-
-This template is structured to follow the [Azure Developer CLI](https://aka.ms/azure-dev/overview). You can learn more about `azd` architecture in [the official documentation](https://learn.microsoft.com/azure/developer/azure-developer-cli/make-azd-compatible?pivots=azd-create#understand-the-azd-architecture).
+- [**Azure Health Data Services**](https://learn.microsoft.com/azure/healthcare-apis/health-data-services-get-started)
 
 ### Next Steps
-
-At this point, you have a complete application deployed on Azure. But there is much more that the Azure Developer CLI can do. These next steps will introduce you to additional commands that will make creating applications on Azure much easier. Using the Azure Developer CLI, you can setup your pipelines, monitor your application, test and debug locally.
-
-> Note: Needs to manually install [setup-azd extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.azd) for Azure DevOps (azdo).
 
 - [`azd pipeline config`](https://learn.microsoft.com/azure/developer/azure-developer-cli/configure-devops-pipeline?tabs=GitHub) - to configure a CI/CD pipeline (using GitHub Actions or Azure DevOps) to deploy your application whenever code is pushed to the main branch. 
 
@@ -111,58 +86,46 @@ At this point, you have a complete application deployed on Azure. But there is m
 
 - [Run and Debug Locally](https://learn.microsoft.com/azure/developer/azure-developer-cli/debug?pivots=ide-vs-code) - using Visual Studio Code and the Azure Developer CLI extension
 
-- [`azd down`](https://learn.microsoft.com/azure/developer/azure-developer-cli/reference#azd-down) - to delete all the Azure resources created with this template 
+- [`azd down`](https://learn.microsoft.com/azure/developer/azure-developer-cli/reference#azd-down) - to delete all the Azure resources created with this template
 
 - [Enable optional features, like APIM](./OPTIONAL_FEATURES.md) - for enhanced backend API protection and observability
 
-### Additional `azd` commands
+# Use cases
 
-The Azure Developer CLI includes many other commands to help with your Azure development experience. You can view these commands at the terminal by running `azd help`. You can also view the full list of commands on our [Azure Developer CLI command](https://aka.ms/azure-dev/ref) page.
+## System of record data sources
 
-## Security
+- EHRs (Epic, Oracle Health, etc.)
+- Ancillary clinical systems, such as radiology (imaging) information system (RIS), laboratory management IS (LMIS), picture archiving and communication system (PACS), vendor neutral archive (VNA) of imaging data.
+- Integration (interface) engines
 
-### Roles
+## Extract data in one of the common healthcare data formats (HL7v2, CDA/CCD, FHIR), DICOM (?), or unstructured/semi-structured data (CSV, TSV, PDF, TXT, etc.)
 
-This template creates a [managed identity](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview) for your app inside your Azure Active Directory tenant, and it is used to authenticate your app with Azure and other services that support Azure AD authentication like Key Vault via access policies. You will see principalId referenced in the infrastructure as code files, that refers to the id of the currently logged in Azure Developer CLI user, which will be granted access policies and permissions to run the application locally. To view your managed identity in the Azure Portal, follow these [steps](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/how-to-view-managed-identity-service-principal-portal).
+### Ingest data into Azure Health Data Services
 
-### Key Vault
+- Via healthcare APIs (FHIR, DICOM?)
+- Via bulk import into healthcare APIs
+- Copy into ADLSv2 and ingest into healthcare API
 
-This template uses [Azure Key Vault](https://docs.microsoft.com/azure/key-vault/general/overview) to securely store your Cosmos DB connection string for the provisioned Cosmos DB account. Key Vault is a cloud service for securely storing and accessing secrets (API keys, passwords, certificates, cryptographic keys) and makes it simple to give other Azure services access to them. As you continue developing your solution, you may add as many secrets to your Key Vault as you require.
+### Ingest data into Microsoft Fabric
 
-## Reporting Issues and Feedback
+- Export from FHIR, DICOM and ingest into Lakehouse (Healthcare Solution for Fabric)
+- Ingest data from storage into Fabric Lakehouse
 
-If you have any feature requests, issues, or areas for improvement, please [file an issue](https://aka.ms/azure-dev/issues). To keep up-to-date, ask questions, or share suggestions, join our [GitHub Discussions](https://aka.ms/azure-dev/discussions). You may also contact us via AzDevTeam@microsoft.com.
+### Transform and harmonize data using Medallion architecture using Healthcare Solution
 
-# Use case flow
+### Demonstrate analytics capabilities
 
-**Start with the system of record data sources. These can be:** 
-* EHRs (Epic, Oracle Health, etc.)
-* Ancillary clinical systems, such as radiology (imaging) information system (RIS), laboratory management IS (LMIS), picture archiving and communication system (PACS), vendor neutral archive (VNA) of imaging data.
-* Integration (interface) engines
+- Notebook
+- SQL/Spark
+- Power BI visualizations
 
-**Extract data in one of the common healthcare data formats (HL7v2, CDA/CCD, FHIR), DICOM (?), or unstructured/semi-structured data (CSV, TSV, PDF, TXT, etc.)**
+### Demonstrate ML (AutoML) on discrete (structured) data
 
-**Ingest data into Azure Health Data Services**
-* Via healthcare APIs (FHIR, DICOM?)
-* Via bulk import into healthcare APIs
-* Copy into ADLSv2 and ingest into healthcare API
+### Demonstrate GenAI (Copilot) on text data.
 
-**Ingest data into Microsoft Fabric**
-* Export from FHIR, DICOM and ingest into Lakehouse (Healthcare Solution for Fabric)
-* Ingest data from storage into Fabric Lakehouse
+- Include structured data?
 
-**Transform and harmonize data using Medallion architecture using Healthcare Solution**
+### Demonstrate natural language question understanding and translation into
 
-**Demonstrate analytics capabilities:**
-* Notebook
-* SQL/Spark
-* Power BI visualizations
-
-**Demonstrate ML (AutoML) on discrete (structured) data**
-
-**Demonstrate GenAI (Copilot) on text data.**
-* Include structured data?
-
-**Demonstrate natural language question understanding and translation into**
-* SQL queries
-* FHIR interactions
+- SQL queries
+- FHIR interactions
