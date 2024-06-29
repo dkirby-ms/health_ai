@@ -40,9 +40,6 @@ param containerRegistryHostSuffix string = 'azurecr.io'
 @description('Id of the user or app to assign application roles')
 param principalId string = ''
 
-@description('The base URL used by the web service for sending API requests')
-param webApiBaseUrl string = ''
-
 var abbrs = loadJsonContent('./abbreviations.json')
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 var tags = { 'azd-env-name': environmentName }
@@ -56,7 +53,7 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   tags: tags
 }
 
-// Creating Storage Account for FIHRs, Functions, App Services in general
+// Creating Storage Account for FHIRs, Functions, App Services in general
 module storage './core/storage/storage-account.bicep' = {
   scope: resourceGroup(rg.name)
   name: storageAccountName
