@@ -117,7 +117,7 @@ module web './app/web.bicep' = {
 }
 
 // Api backend
-module api './app/apim/api.bicep' = {
+module api './app/api.bicep' = {
   name: 'api'
   scope: rg
   params: {
