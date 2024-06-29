@@ -13,7 +13,7 @@ param location string = deployment().location
 // "resourceGroupName": {
 //      "value": "myGroupName"
 // }
-param fhirName string = 'dkfhirlab123'
+param fhirName string = 'fhir${uniqueString('ahds', utcNow('u'))}'
 param storageAccountName string = 'eslzsa${uniqueString('ahds', utcNow('u'))}'
 param storageAccountType string = 'Standard_LRS'
 param apiUrlPath string = 'https://raw.githubusercontent.com/dkirby-ms/health_ai/main/infra/app/ahds/AHDS-Swagger.json'
@@ -24,7 +24,7 @@ param applicationInsightsName string = ''
 param containerAppsEnvironmentName string = ''
 param containerRegistryName string = ''
 param keyVaultName string = ''
-param logAnalyticsName string = 'healthailogs'
+param logAnalyticsName string = ''
 param resourceGroupName string = ''
 param webContainerAppName string = ''
 param apimServiceName string = ''
