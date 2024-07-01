@@ -39428,7 +39428,7 @@
     },
     "info": {
       "description": "Azure Healthcare APIs",
-      "title": "Microsoft",
+      "title": "FHIR",
       "version": "4.0.1"
     },
     "schemes": [
