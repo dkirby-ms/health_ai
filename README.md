@@ -5,6 +5,46 @@
 
 A blueprint for deploying AHDS with APIM frontend and using it with LMs.
 
+## Use cases
+
+### System of record data sources
+
+- EHRs (Epic, Oracle Health, etc.)
+- Ancillary clinical systems, such as radiology (imaging) information system (RIS), laboratory management IS (LMIS), picture archiving and communication system (PACS), vendor neutral archive (VNA) of imaging data.
+- Integration (interface) engines
+
+### Extract data in one of the common healthcare data formats (HL7v2, CDA/CCD, FHIR), DICOM (?), or unstructured/semi-structured data (CSV, TSV, PDF, TXT, etc.)
+
+### Ingest data into Azure Health Data Services
+
+- Via healthcare APIs (FHIR, DICOM?)
+- Via bulk import into healthcare APIs
+- Copy into ADLSv2 and ingest into healthcare API
+
+### Ingest data into Microsoft Fabric
+
+- Export from FHIR, DICOM and ingest into Lakehouse (Healthcare Solution for Fabric)
+- Ingest data from storage into Fabric Lakehouse
+
+### Transform and harmonize data using Medallion architecture using Healthcare Solution
+
+### Demonstrate analytics capabilities
+
+- Notebook
+- SQL/Spark
+- Power BI visualizations
+
+### Demonstrate ML (AutoML) on discrete (structured) data
+
+### Demonstrate GenAI (Copilot) on text data.
+
+- Include structured data?
+
+### Demonstrate natural language question understanding and translation into
+
+- SQL queries
+- FHIR interactions
+
 ## Prerequisites
 
 The following prerequisites are required to use this application. Please ensure that you have them all installed locally if you wish to use the sample code.
@@ -68,43 +108,3 @@ This application utilizes the following Azure resources:
 - [`azd down`](https://learn.microsoft.com/azure/developer/azure-developer-cli/reference#azd-down) - to delete all the Azure resources created with this template
 
 - [Enable optional features, like APIM](./OPTIONAL_FEATURES.md) - for enhanced backend API protection and observability
-
-# Use cases
-
-## System of record data sources
-
-- EHRs (Epic, Oracle Health, etc.)
-- Ancillary clinical systems, such as radiology (imaging) information system (RIS), laboratory management IS (LMIS), picture archiving and communication system (PACS), vendor neutral archive (VNA) of imaging data.
-- Integration (interface) engines
-
-## Extract data in one of the common healthcare data formats (HL7v2, CDA/CCD, FHIR), DICOM (?), or unstructured/semi-structured data (CSV, TSV, PDF, TXT, etc.)
-
-### Ingest data into Azure Health Data Services
-
-- Via healthcare APIs (FHIR, DICOM?)
-- Via bulk import into healthcare APIs
-- Copy into ADLSv2 and ingest into healthcare API
-
-### Ingest data into Microsoft Fabric
-
-- Export from FHIR, DICOM and ingest into Lakehouse (Healthcare Solution for Fabric)
-- Ingest data from storage into Fabric Lakehouse
-
-### Transform and harmonize data using Medallion architecture using Healthcare Solution
-
-### Demonstrate analytics capabilities
-
-- Notebook
-- SQL/Spark
-- Power BI visualizations
-
-### Demonstrate ML (AutoML) on discrete (structured) data
-
-### Demonstrate GenAI (Copilot) on text data.
-
-- Include structured data?
-
-### Demonstrate natural language question understanding and translation into
-
-- SQL queries
-- FHIR interactions
