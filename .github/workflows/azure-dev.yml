@@ -65,4 +65,4 @@ jobs:
           subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
 
       - name: Deploy Application
-        run: azd deploy --no-prompt --debug
+        run: azd deploy --no-prompt

@@ -102,6 +102,7 @@ module containerApps './core/host/container-apps.bicep' = {
 module web './app/web.bicep' = {
   name: 'web'
   scope: rg
+  dependsOn: [ containerApps ]
   params: {
     name: !empty(webContainerAppName) ? webContainerAppName : '${abbrs.appContainerApps}web-${resourceToken}'
     location: location
@@ -118,6 +119,7 @@ module web './app/web.bicep' = {
 module api './app/api.bicep' = {
   name: 'api'
   scope: rg
+  dependsOn: [ containerApps ]
   params: {
     name: !empty(apiContainerAppName) ? apiContainerAppName : '${abbrs.appContainerApps}api-${resourceToken}'
     location: location
