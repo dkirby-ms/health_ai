@@ -40,5 +40,5 @@ hooks:
       shell: sh
       run: |
         chmod 755 ./hooks/postdeploy.sh
-        ./scripts/postdeploy.sh $AZURE_ENV_NAME $APIM_SERVICE_NAME /HealthAI Swagger $API_SPEC_URI $AZURE_SUBSCRIPTION_ID $AZURE_CLIENT_ID $AZURE_CLIENT_SECRET $FHIR_SERVICE_NAME
+        ./hooks/postdeploy.sh $AZURE_ENV_NAME $APIM_SERVICE_NAME /HealthAI Swagger $API_SPEC_URI $AZURE_SUBSCRIPTION_ID $AZURE_CLIENT_ID $AZURE_CLIENT_SECRET $FHIR_SERVICE_NAME
 
