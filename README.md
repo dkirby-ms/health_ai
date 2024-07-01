@@ -36,7 +36,7 @@ A blueprint for deploying AHDS with APIM frontend and using it with LMs.
 
 ### Demonstrate ML (AutoML) on discrete (structured) data
 
-### Demonstrate GenAI (Copilot) on text data.
+### Demonstrate GenAI (Copilot) on text data
 
 - Include structured data?
 
