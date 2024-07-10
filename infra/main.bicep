@@ -13,8 +13,10 @@ param location string = deployment().location
 // "resourceGroupName": {
 //      "value": "myGroupName"
 // }
-param fhirName string = 'fhir${uniqueString('ahds', utcNow('u'))}'
-param storageAccountName string = 'eslzsa${uniqueString('ahds', utcNow('u'))}'
+//param fhirName string = 'fhir${uniqueString('ahds', utcNow('u'))}'
+param fhirName string = ''
+//param storageAccountName string = 'eslzsa${uniqueString('ahds', utcNow('u'))}'
+param storageAccountName string = ''
 param storageAccountType string = 'Standard_LRS'
 param apiUrlPath string = 'https://raw.githubusercontent.com/dkirby-ms/health_ai/main/infra/app/ahds/AHDS-Swagger.json'
 
@@ -40,7 +42,8 @@ param containerRegistryHostSuffix string = 'azurecr.io'
 @description('Id of the user or app to assign application roles')
 param principalId string = ''
 
-var fhirWorkspaceName = 'ws${fhirName}'
+//var fhirWorkspaceName = 'ws${fhirName}'
+var fhirWorkspaceName = ''
 var abbrs = loadJsonContent('./abbreviations.json')
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 var tags = { 'azd-env-name': environmentName }
@@ -57,22 +60,24 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 // Creating Storage Account for FHIRs, Functions, App Services in general
 module storage './core/storage/storage-account.bicep' = {
   scope: resourceGroup(rg.name)
-  name: storageAccountName
+  name: 'storage'
   params: {
     location: location
-    name: storageAccountName
+    name: !empty(storageAccountName) ? storageAccountName : '${abbrs.storageStorageAccounts}${resourceToken}'
   }
 }
 
 // adhs services
 module fhir './app/ahds/fhirservice.bicep' = {
   scope: resourceGroup(rg.name)
-  name: fhirName
+  name: 'fhir'
+  dependsOn: [ storage ]
   params: {
-    fhirName: fhirName
-    workspaceName: fhirWorkspaceName
+    workspaceName: !empty(fhirWorkspaceName) ? fhirWorkspaceName : 'hds${resourceToken}'
+    fhirName: !empty(fhirName) ? fhirName : 'fhir${resourceToken}'
     location: location
     diagnosticWorkspaceId: monitoring.outputs.logAnalyticsWorkspaceId
+    storageAccountName: storage.outputs.name
   }
 }
 

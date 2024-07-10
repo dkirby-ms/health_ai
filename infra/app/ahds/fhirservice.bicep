@@ -1,6 +1,6 @@
 // Parameters
-param fhirName string
 param workspaceName string
+param fhirName string
 param location string = resourceGroup().location
 
 @description('Optional. Specifies the number of days that logs will be kept for; a value of 0 will retain data indefinitely.')
@@ -30,6 +30,12 @@ param diagnosticMetricsToEnable array = [
 
 @description('Optional. The name of the diagnostic setting, if deployed.')
 param diagnosticSettingsName string = '${fhirName}-diagnosticSettings-001'
+
+param storageAccountName string
+
+// Storage Blob Data Contributor
+param roleDefinitionResourceName string = 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
+
 
 // Variables
 var diagnosticsLogsSpecified = [for category in filter(diagnosticLogCategoriesToEnable, item => item != 'allLogs'): {
@@ -109,6 +115,30 @@ resource FHIR_diagnosticSettings 'Microsoft.Insights/diagnosticsettings@2021-05-
     logs: diagnosticsLogs
   }
   scope: FHIR
+}
+
+// Storage account settings
+resource fhirsa 'Microsoft.Storage/storageAccounts@2023-01-01' existing = {
+  name: storageAccountName
+}
+
+// Storage Blob Data Contributor role definition
+@description('This is the built-in role definition for Storage Blob Data Contributor')
+resource fhirrole 'Microsoft.Authorization/roleDefinitions@2018-01-01-preview' existing = {
+  name: roleDefinitionResourceName
+}
+
+var principalId = FHIR.identity.principalId
+var roleDefinitionId = fhirrole.id
+
+// Assigning Storage Blob Data Contributor role to FHIR service
+resource fhirroleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(subscription().id, FHIR.name, roleDefinitionId)
+  properties: {
+    principalId: principalId
+    roleDefinitionId: roleDefinitionId
+  }
+  scope: fhirsa
 }
 
 // Outputs
