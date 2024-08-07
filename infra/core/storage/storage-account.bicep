@@ -26,7 +26,13 @@ param supportsHttpsTrafficOnly bool = true
 param tables array = []
 param networkAcls object = {
   bypass: 'AzureServices'
-  defaultAction: 'Allow'
+  defaultAction: 'Deny'
+  ipRules: [
+    {
+      value: '100.64.0.0/10'
+      action: 'Allow'
+    }
+  ]
 }
 @allowed([ 'Enabled', 'Disabled' ])
 param publicNetworkAccess string = 'Enabled'

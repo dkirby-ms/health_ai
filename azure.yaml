@@ -35,10 +35,9 @@ hooks:
   postdeploy:
     windows:
       shell: pwsh
-      run: './hooks/postdeploy.ps1 -RG rg-$env:AZURE_ENV_NAME -APIMNAME $env:APIM_SERVICE_NAME -APIPath /HealthAI -APIFormat Swagger -ApiUrlPath $env:API_SPEC_URI -subscriptionId $env:AZURE_SUBSCRIPTION_ID -fhirHost $env:FHIR_SERVICE_NAME'
+      run: './hooks/postdeploy.ps1 -RG rg-$env:AZURE_ENV_NAME -APIMNAME $env:APIM_SERVICE_NAME -APIPath /HealthAI -APIFormat Swagger -ApiUrlPath $env:API_SPEC_URI -subscriptionId $env:AZURE_SUBSCRIPTION_ID -fhirHost $env:FHIR_SERVICE_NAME -storageAccount $env:STORAGE_ACCOUNT_NAME -workspaceID $env:WORKSPACE_ID -fhirID $env:FHIR_ID -tenantID $env:AZURE_TENANT_ID'
     posix:
       shell: sh
       run: |
         chmod 755 ./hooks/postdeploy.sh
-        ./hooks/postdeploy.sh $AZURE_ENV_NAME $APIM_SERVICE_NAME /HealthAI Swagger $API_SPEC_URI $AZURE_SUBSCRIPTION_ID $AZURE_CLIENT_ID $AZURE_CLIENT_SECRET $FHIR_SERVICE_NAME
-
+        ./hooks/postdeploy.sh rg-$AZURE_ENV_NAME $APIM_SERVICE_NAME /HealthAI Swagger $API_SPEC_URI $AZURE_SUBSCRIPTION_ID $FHIR_SERVICE_NAME $STORAGE_ACCOUNT_NAME $WORKSPACE_ID $FHIR_ID $AZURE_TENANT_ID
