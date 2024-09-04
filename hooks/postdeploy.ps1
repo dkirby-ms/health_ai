@@ -5,7 +5,11 @@ param(
       [string] [Parameter(Mandatory=$true)] $APIFormat,
       [string] [Parameter(Mandatory=$true)] $ApiUrlPath,
       [string] [Parameter(Mandatory=$true)] $subscriptionId,
-      [string] [Parameter(Mandatory=$true)] $fhirHost
+      [string] [Parameter(Mandatory=$true)] $fhirHost,
+      [string] [Parameter(Mandatory=$true)] $storageAccount,
+      [string] [Parameter(Mandatory=$true)] $workspaceID,
+      [string] [Parameter(Mandatory=$true)] $fhirID,
+      [string] [Parameter(Mandatory=$true)] $tenantID
       )
 
       $ErrorActionPreference = 'Stop'
@@ -27,4 +31,7 @@ param(
       # Import API
       Import-AzApiManagementApi -Context $context -SpecificationFormat $APIFormat -SpecificationPath $destinationReplace -Path $APIPath
 
+      # Update Storage Account Network ACLs
+      Update-AzStorageAccountNetworkRuleSet -ResourceGroupName $RG -Name $storageAccount -ResourceAccessRule (@{ResourceId=$workspaceID;TenantId=$tenantId},@{ResourceId=$fhirID;TenantId=$tenantId})
+      
       Remove-Item -Path ".\src\web\.env.local" -Force

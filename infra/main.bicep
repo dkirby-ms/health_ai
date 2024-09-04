@@ -205,3 +205,6 @@ output FHIR_SERVICE_URL string = fhir.outputs.fhirServiceURL
 output FHIR_SERVICE_NAME string = fhir.outputs.serviceHost
 output APIM_SERVICE_NAME string = apim.outputs.apimServiceName
 output API_SPEC_URI string = apiUrlPath
+output STORAGE_ACCOUNT_NAME string = storage.outputs.name
+output WORKSPACE_ID string = fhir.outputs.fhirWorkspaceID
+output FHIR_ID string = fhir.outputs.fhirID

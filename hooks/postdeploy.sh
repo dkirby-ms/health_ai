@@ -6,6 +6,11 @@ APIFormat=$4
 ApiUrlPath=$5
 subscriptionId=$6
 fhirHost=$7
+StorageName=$8
+WorkspaceID=$9
+FhirID=${10}
+TenantID=${11}
+
 
 # Get the swagger file
 destination="AHDS-Swagger.json"
@@ -23,7 +28,12 @@ modifiedContent=$(echo "$localContent" | sed s#XXXXXXXXXXXXXXXXXXXXXXX#$fhirHost
 echo "$modifiedContent" > $destinationReplace
 
 # Import the API into APIM
-az apim api import -g rg-$RG --service-name $APIMName --path $APIPath --specification-format $APIFormat --specification-path $destinationReplace
+az apim api import -g $RG --service-name $APIMName --path $APIPath --specification-format $APIFormat --specification-path $destinationReplace
+
+# Update storage account's NetworkACLs to allow access from FHIR service
+echo "Updating NACLs: ${WorkspaceID} ${FhirID} ${RG} ${StorageName} ${TenantID}"
+az storage account network-rule add --resource-id $WorkspaceID -g $RG --account-name $StorageName --tenant-id $TenantID
+az storage account network-rule add --resource-id $FhirID -g $RG --account-name $StorageName --tenant-id $TenantID
 
 # Remove temp .env file
 rm ./src/web/.env.local
