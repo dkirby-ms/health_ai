@@ -1,8 +1,14 @@
+import os
 import asyncio
 import openai
+import dotenv
+
+dotenv.load_dotenv()
+openai.api_base = os.environ["OPENAI_API_BASE"]
+
 from azure.core.credentials import AzureKeyCredential
-from azure.ai.openai import OpenAIClient, ChatMessage, ChatCompletionOptions
-from azure.ai.openai.chat import ChatClient
+from openai import OpenAIClient, ChatMessage, ChatCompletionOptions
+from openai.chat import ChatClient
 from azure.search.documents import SearchClient
 from azure.search.documents.indexes.models import SearchIndex
 from azure.search.documents.indexes.models import SearchIndexClient
